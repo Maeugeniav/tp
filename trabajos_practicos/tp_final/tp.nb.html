@@ -1899,11 +1899,49 @@ print(conteo_por_subtipo)</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGVsaXRvcyA8LSBkZWxpdG9zICU+JVxuICBtdXRhdGUoXG4gICAgZnJhbmphID0gY2FzZV93aGVuKFxuICAgICAgZnJhbmphID49IDYgJiBmcmFuamEgPCAxMiB+IFwiTWHDsWFuYVwiLFxuICAgICAgZnJhbmphID49IDEyICYgZnJhbmphIDwgMTggfiBcIlRhcmRlXCIsXG4gICAgICBmcmFuamEgPj0gMTggJiBmcmFuamEgPCAyNCB+IFwiTm9jaGVcIixcbiAgICAgIGZyYW5qYSA+PSAwICYgZnJhbmphIDwgNiAgfiBcIk1hZHJ1Z2FkYVwiLFxuICAgICAgVFJVRSB+IFwiRGVzY29ub2NpZG9cIiAjIFBhcmEgY2Fzb3MgZnVlcmEgZGUgcmFuZ28gKG9wY2lvbmFsKVxuICAgIClcbiAgKVxuYGBgIn0= -->
+<pre class="r"><code>delitos &lt;- delitos %&gt;%
+  mutate(
+    franja = case_when(
+      franja &gt;= 6 &amp; franja &lt; 12 ~ &quot;Mañana&quot;,
+      franja &gt;= 12 &amp; franja &lt; 18 ~ &quot;Tarde&quot;,
+      franja &gt;= 18 &amp; franja &lt; 24 ~ &quot;Noche&quot;,
+      franja &gt;= 0 &amp; franja &lt; 6  ~ &quot;Madrugada&quot;,
+      TRUE ~ &quot;Desconocido&quot; # Para casos fuera de rango (opcional)
+    )
+  )</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGVsaXRvcyR0aXBvX2RpYSA8LSBpZmVsc2UoZGVsaXRvcyRkaWEgJWluJSBjKFwiU0FCXCIsIFwiRE9NXCIpLFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXCJGaW4gZGUgc2VtYW5hXCIsIFwiRMOtYSBkZSBzZW1hbmFcIilcblxuYGBgIn0= -->
+<pre class="r"><code>delitos$tipo_dia &lt;- ifelse(delitos$dia %in% c(&quot;SAB&quot;, &quot;DOM&quot;),
+                                             &quot;Fin de semana&quot;, &quot;Día de semana&quot;)
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBDcmVhciBjb2x1bW5hICdlc3RhY2lvbicgYmFzYWRhIGVuIGVsIG1lc1xuZGVsaXRvcyA8LSBkZWxpdG9zICU+JVxuICBtdXRhdGUoXG4gICAgZXN0YWNpb24gPSBjYXNlX3doZW4oXG4gICAgICBtZXMgJWluJSBjKFwiZGljaWVtYnJlXCIsIFwiZW5lcm9cIiwgXCJmZWJyZXJvXCIpIH4gXCJWZXJhbm9cIixcbiAgICAgIG1lcyAlaW4lIGMoXCJtYXJ6b1wiLCBcImFicmlsXCIsIFwibWF5b1wiKSAgICAgICB+IFwiT3Rvw7FvXCIsXG4gICAgICBtZXMgJWluJSBjKFwianVuaW9cIiwgXCJqdWxpb1wiLCBcImFnb3N0b1wiKSAgICAgfiBcIkludmllcm5vXCIsXG4gICAgICBtZXMgJWluJSBjKFwic2VwdGllbWJyZVwiLCBcIm9jdHVicmVcIiwgXCJub3ZpZW1icmVcIikgfiBcIlByaW1hdmVyYVwiLFxuICAgICAgVFJVRSB+IFwiRGVzY29ub2NpZG9cIiAjIFBhcmEgY2Fzb3Mgbm8gZXNwZXJhZG9zXG4gICAgKVxuICApXG5gYGAifQ== -->
+<pre class="r"><code># Crear columna &#39;estacion&#39; basada en el mes
+delitos &lt;- delitos %&gt;%
+  mutate(
+    estacion = case_when(
+      mes %in% c(&quot;diciembre&quot;, &quot;enero&quot;, &quot;febrero&quot;) ~ &quot;Verano&quot;,
+      mes %in% c(&quot;marzo&quot;, &quot;abril&quot;, &quot;mayo&quot;)       ~ &quot;Otoño&quot;,
+      mes %in% c(&quot;junio&quot;, &quot;julio&quot;, &quot;agosto&quot;)     ~ &quot;Invierno&quot;,
+      mes %in% c(&quot;septiembre&quot;, &quot;octubre&quot;, &quot;noviembre&quot;) ~ &quot;Primavera&quot;,
+      TRUE ~ &quot;Desconocido&quot; # Para casos no esperados
+    )
+  )</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIlIgTm90ZWJvb2siDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQpUaGlzIGlzIGFuIFtSIE1hcmtkb3duXShodHRwOi8vcm1hcmtkb3duLnJzdHVkaW8uY29tKSBOb3RlYm9vay4gV2hlbiB5b3UgZXhlY3V0ZSBjb2RlIHdpdGhpbiB0aGUgbm90ZWJvb2ssIHRoZSByZXN1bHRzIGFwcGVhciBiZW5lYXRoIHRoZSBjb2RlLiANCg0KVHJ5IGV4ZWN1dGluZyB0aGlzIGNodW5rIGJ5IGNsaWNraW5nIHRoZSAqUnVuKiBidXR0b24gd2l0aGluIHRoZSBjaHVuayBvciBieSBwbGFjaW5nIHlvdXIgY3Vyc29yIGluc2lkZSBpdCBhbmQgcHJlc3NpbmcgKkN0cmwrU2hpZnQrRW50ZXIqLiANCg0KYGBge3J9DQppbnN0YWxsLnBhY2thZ2VzKCJvcGVueGxzeCIpDQpgYGANCg0KLg0KYGBge3J9DQpsaWJyYXJ5KG9wZW54bHN4KQ0KZGVsaXRvcyA8LSByZWFkLnhsc3goIkM6L1VzZXJzL21hcmlhL0Rvd25sb2Fkcy9kZWxpdG9zXzIwMjMueGxzeCIpDQpkZWxpdG9zDQpgYGANCmBgYHtyfQ0Kc3VtbWFyeShkZWxpdG9zKQ0KDQpgYGANCmBgYHtyfQ0KZGltKGRlbGl0b3MpDQpgYGANCg0KDQpgYGB7cn0NCiMgVmVyaWZpY2FyIHZhbG9yZXMgbnVsb3MgcG9yIGNvbHVtbmENCmNvbFN1bXMoaXMubmEoZGVsaXRvcykpDQpgYGANCg0KYGBge3J9DQpjYW50aWRhZF92YWxvcmVzX3VuaWNvcyA8LSAodW5pcXVlKGRlbGl0b3MkdGlwbykpDQpwcmludChjYW50aWRhZF92YWxvcmVzX3VuaWNvcykNCmNvbnRlb19wb3JfdGlwbyA8LSB0YWJsZShkZWxpdG9zJHRpcG8pDQpwcmludChjb250ZW9fcG9yX3RpcG8pDQpgYGANCg0KYGBge3J9DQpjYW50aWRhZF92YWxvcmVzX3VuaWNvcyA8LSAodW5pcXVlKGRlbGl0b3Mkc3VidGlwbykpDQpwcmludChjYW50aWRhZF92YWxvcmVzX3VuaWNvcykNCmNvbnRlb19wb3Jfc3VidGlwbyA8LSB0YWJsZShkZWxpdG9zJHN1YnRpcG8pDQpwcmludChjb250ZW9fcG9yX3N1YnRpcG8pDQoNCmBgYA0KYGBge3J9DQoNCmBgYA0KDQo=</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIlIgTm90ZWJvb2siDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQpUaGlzIGlzIGFuIFtSIE1hcmtkb3duXShodHRwOi8vcm1hcmtkb3duLnJzdHVkaW8uY29tKSBOb3RlYm9vay4gV2hlbiB5b3UgZXhlY3V0ZSBjb2RlIHdpdGhpbiB0aGUgbm90ZWJvb2ssIHRoZSByZXN1bHRzIGFwcGVhciBiZW5lYXRoIHRoZSBjb2RlLiANCg0KVHJ5IGV4ZWN1dGluZyB0aGlzIGNodW5rIGJ5IGNsaWNraW5nIHRoZSAqUnVuKiBidXR0b24gd2l0aGluIHRoZSBjaHVuayBvciBieSBwbGFjaW5nIHlvdXIgY3Vyc29yIGluc2lkZSBpdCBhbmQgcHJlc3NpbmcgKkN0cmwrU2hpZnQrRW50ZXIqLiANCg0KYGBge3J9DQppbnN0YWxsLnBhY2thZ2VzKCJvcGVueGxzeCIpDQpgYGANCg0KLg0KYGBge3J9DQpsaWJyYXJ5KG9wZW54bHN4KQ0KZGVsaXRvcyA8LSByZWFkLnhsc3goIkM6L1VzZXJzL21hcmlhL0Rvd25sb2Fkcy9kZWxpdG9zXzIwMjMueGxzeCIpDQpkZWxpdG9zDQpgYGANCmBgYHtyfQ0Kc3VtbWFyeShkZWxpdG9zKQ0KDQpgYGANCmBgYHtyfQ0KZGltKGRlbGl0b3MpDQpgYGANCg0KDQpgYGB7cn0NCiMgVmVyaWZpY2FyIHZhbG9yZXMgbnVsb3MgcG9yIGNvbHVtbmENCmNvbFN1bXMoaXMubmEoZGVsaXRvcykpDQpgYGANCg0KYGBge3J9DQpjYW50aWRhZF92YWxvcmVzX3VuaWNvcyA8LSAodW5pcXVlKGRlbGl0b3MkdGlwbykpDQpwcmludChjYW50aWRhZF92YWxvcmVzX3VuaWNvcykNCmNvbnRlb19wb3JfdGlwbyA8LSB0YWJsZShkZWxpdG9zJHRpcG8pDQpwcmludChjb250ZW9fcG9yX3RpcG8pDQpgYGANCg0KYGBge3J9DQpjYW50aWRhZF92YWxvcmVzX3VuaWNvcyA8LSAodW5pcXVlKGRlbGl0b3Mkc3VidGlwbykpDQpwcmludChjYW50aWRhZF92YWxvcmVzX3VuaWNvcykNCmNvbnRlb19wb3Jfc3VidGlwbyA8LSB0YWJsZShkZWxpdG9zJHN1YnRpcG8pDQpwcmludChjb250ZW9fcG9yX3N1YnRpcG8pDQoNCmBgYA0KYGBge3J9DQojR2VuZXJvIGxhIGNvbHVtbmEgZnJhbmphKGhvcmFyaWEpDQpkZWxpdG9zIDwtIGRlbGl0b3MgJT4lDQogIG11dGF0ZSgNCiAgICBmcmFuamEgPSBjYXNlX3doZW4oDQogICAgICBmcmFuamEgPj0gNiAmIGZyYW5qYSA8IDEyIH4gIk1hw7FhbmEiLA0KICAgICAgZnJhbmphID49IDEyICYgZnJhbmphIDwgMTggfiAiVGFyZGUiLA0KICAgICAgZnJhbmphID49IDE4ICYgZnJhbmphIDwgMjQgfiAiTm9jaGUiLA0KICAgICAgZnJhbmphID49IDAgJiBmcmFuamEgPCA2ICB+ICJNYWRydWdhZGEiLA0KICAgICAgVFJVRSB+ICJEZXNjb25vY2lkbyIgIyBQYXJhIGNhc29zIGZ1ZXJhIGRlIHJhbmdvIA0KICAgICkNCiAgKQ0KYGBgDQoNCmBgYHtyfQ0KZGVsaXRvcyR0aXBvX2RpYSA8LSBpZmVsc2UoZGVsaXRvcyRkaWEgJWluJSBjKCJTQUIiLCAiRE9NIiksDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiRmluIGRlIHNlbWFuYSIsICJEw61hIGRlIHNlbWFuYSIpDQoNCmBgYA0KDQpgYGB7cn0NCiMgQ3JlYXIgY29sdW1uYSAnZXN0YWNpb24nIGJhc2FkYSBlbiBlbCBtZXMNCmRlbGl0b3MgPC0gZGVsaXRvcyAlPiUNCiAgbXV0YXRlKA0KICAgIGVzdGFjaW9uID0gY2FzZV93aGVuKA0KICAgICAgbWVzICVpbiUgYygiZGljaWVtYnJlIiwgImVuZXJvIiwgImZlYnJlcm8iKSB+ICJWZXJhbm8iLA0KICAgICAgbWVzICVpbiUgYygibWFyem8iLCAiYWJyaWwiLCAibWF5byIpICAgICAgIH4gIk90b8OxbyIsDQogICAgICBtZXMgJWluJSBjKCJqdW5pbyIsICJqdWxpbyIsICJhZ29zdG8iKSAgICAgfiAiSW52aWVybm8iLA0KICAgICAgbWVzICVpbiUgYygic2VwdGllbWJyZSIsICJvY3R1YnJlIiwgIm5vdmllbWJyZSIpIH4gIlByaW1hdmVyYSIsDQogICAgICBUUlVFIH4gIkRlc2Nvbm9jaWRvIiAjIFBhcmEgY2Fzb3Mgbm8gZXNwZXJhZG9zDQogICAgKQ0KICApDQpgYGANCg0K</div>
 
 
 

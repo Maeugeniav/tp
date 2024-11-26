@@ -46,6 +46,36 @@ print(conteo_por_subtipo)
 
 ```
 ```{r}
+#Genero la columna franja(horaria)
+delitos <- delitos %>%
+  mutate(
+    franja = case_when(
+      franja >= 6 & franja < 12 ~ "Mañana",
+      franja >= 12 & franja < 18 ~ "Tarde",
+      franja >= 18 & franja < 24 ~ "Noche",
+      franja >= 0 & franja < 6  ~ "Madrugada",
+      TRUE ~ "Desconocido" # Para casos fuera de rango 
+    )
+  )
+```
 
+```{r}
+delitos$tipo_dia <- ifelse(delitos$dia %in% c("SAB", "DOM"),
+                                             "Fin de semana", "Día de semana")
+
+```
+
+```{r}
+# Crear columna 'estacion' basada en el mes
+delitos <- delitos %>%
+  mutate(
+    estacion = case_when(
+      mes %in% c("diciembre", "enero", "febrero") ~ "Verano",
+      mes %in% c("marzo", "abril", "mayo")       ~ "Otoño",
+      mes %in% c("junio", "julio", "agosto")     ~ "Invierno",
+      mes %in% c("septiembre", "octubre", "noviembre") ~ "Primavera",
+      TRUE ~ "Desconocido" # Para casos no esperados
+    )
+  )
 ```
 
